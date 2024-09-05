@@ -7,6 +7,17 @@ IConfiguration configuration = new ConfigurationBuilder()
     .Build();var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "Open",
+        builder =>
+        {
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 // Register the DataContext service
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlite(configuration["ConnectionStrings:DefaultSQLiteConnection"]));
 
@@ -25,6 +36,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+app.UseCors("Open");
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
