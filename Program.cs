@@ -24,6 +24,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSignalR();
 // Register the DataContext service
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlite(configuration["ConnectionStrings:DefaultSQLiteConnection"]));
+builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(configuration["ConnectionStrings:DefaultSQLServerConnection"]));
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
